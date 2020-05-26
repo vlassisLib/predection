@@ -1,9 +1,10 @@
 values = [{"t" : [ 1 , 2 , 3 , 4 , 5]},
-          {"D(t)" : [213,201,198,187,183]},
+          {"D(t)" : [100,80,110,115,105,110,125,120]},
           {"F(t)":[]},
           {"f(t)":[]},
           {"T(t)":[]}
           ]
+
 
 class Prediction:
     def __init__(self,a_list):
@@ -15,19 +16,20 @@ class Prediction:
             self.a_list[2]["F(t)"].append(self.a_list[1]["D(t)"][i])
         print(self.a_list[1]["D(t)"])
         print(self.a_list[2]["F(t)"])
-
-    def movingAverage(self):
-        k = input("Enter your k here: ")
+    
+    def movingAverage(self,k):
+        
         for i in range(len(self.a_list[1]["D(t)"][0:k])):
             self.a_list[2]["F(t)"].append(None)
         for i in range(len(self.a_list[1]["D(t)"][k::])):
             diviation = sum(self.a_list[1]["D(t)"][i:(k+i)])/k
-            self.a_list[2]["F(t)"].append(diviation)
+            self.a_list[2]["F(t)"].append("%.2f" %diviation)
         print(self.a_list[1]["D(t)"])
         print(self.a_list[2]["F(t)"])
+        return k
     
-    def stationaryMobileMedia(self):
-        k = input("Enter your k here: ")
+    def stationaryMobileMedia(self,k):
+        
         vectorList = []
 
         for i in range(k):
@@ -50,6 +52,7 @@ class Prediction:
                     sumMult = sumMult + mult
                 self.a_list[2]["F(t)"].append(sumMult)
             print(self.a_list[2]["F(t)"])
+        return k
 
     def exponentialSmoothing(self):
         self.a_list[2]["F(t)"].append(None)
@@ -72,7 +75,7 @@ class Prediction:
         self.a_list[3]["f(t)"].append(self.a_list[1]["D(t)"][0])
         self.a_list[4]["T(t)"].append(None)
         self.a_list[4]["T(t)"].append(0)
-        print(self.a_list[4]["T(t)"])
+       
         a = input("Enter your a here: ")
         b = input("Enter your b here: ")
         leng = len(self.a_list[1]["D(t)"])
@@ -93,7 +96,7 @@ class Prediction:
                 
 
 values_prediction = Prediction(values)
-values_prediction.customizedExponentialSmoothing()
+values_prediction.movingAverage(3)
 
 
 
