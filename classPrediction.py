@@ -1,5 +1,5 @@
 values = [{"t" : [ 1 , 2 , 3 , 4 , 5]},
-          {"D(t)" : [100,80,110,115,105,110,125,120]},
+          {"D(t)" : [100.0,80.00,110.0,115.0,105.0,110.0,125.0,120.0]},
           {"F(t)":[]},
           {"f(t)":[]},
           {"T(t)":[]}
@@ -23,7 +23,7 @@ class Prediction:
             self.a_list[2]["F(t)"].append(None)
         for i in range(len(self.a_list[1]["D(t)"][k::])):
             diviation = sum(self.a_list[1]["D(t)"][i:(k+i)])/k
-            self.a_list[2]["F(t)"].append("%.2f" %diviation)
+            self.a_list[2]["F(t)"].append(diviation)
         print(self.a_list[1]["D(t)"])
         print(self.a_list[2]["F(t)"])
         return k
@@ -54,49 +54,89 @@ class Prediction:
             print(self.a_list[2]["F(t)"])
         return k
 
-    def exponentialSmoothing(self):
-        self.a_list[2]["F(t)"].append(None)
-        self.a_list[2]["F(t)"].append(self.a_list[1]["D(t)"][0])
+    def exponentialSmoothing(self,start):
+        
+        if start == 1:
+            for i in range(0,start):
+                self.a_list[2]["F(t)"].append(None)
+            self.a_list[2]["F(t)"].append(self.a_list[1]["D(t)"][0])
+        elif start > 1:
+            for i in range(len(self.a_list[1]["D(t)"][0:start])):
+                self.a_list[2]["F(t)"].append(None)
+            
+            diviation = sum(self.a_list[1]["D(t)"][0:(start+0)])/start
+            self.a_list[2]["F(t)"].append(diviation)
+        
         
         a = input("Enter your a here: ")
         leng = len(self.a_list[1]["D(t)"])
 
         if a < 1 and a > 0:
-            for i in range(2,leng):
-                error = (self.a_list[1]["D(t)"][i-1] - self.a_list[2]["F(t)"][i-1])
-                forecast = (self.a_list[2]["F(t)"][i-1] + a*(error))
+            for i in range(start+1,leng):
+                error = (float(self.a_list[1]["D(t)"][i-1]) - float(self.a_list[2]["F(t)"][i-1]))
+                forecast = (float(self.a_list[2]["F(t)"][i-1]) + a*(error))
                 self.a_list[2]["F(t)"].append(forecast)
         print(self.a_list[2]["F(t)"])    
-            
-    def customizedExponentialSmoothing(self):
-        self.a_list[2]["F(t)"].append(None)
-        self.a_list[2]["F(t)"].append(self.a_list[1]["D(t)"][0])
-        self.a_list[3]["f(t)"].append(None)
-        self.a_list[3]["f(t)"].append(self.a_list[1]["D(t)"][0])
-        self.a_list[4]["T(t)"].append(None)
+        return start    
+    
+    def customizedExponentialSmoothing(self,start):
+        # self.a_list[2]["F(t)"].append(None)
+        # self.a_list[2]["F(t)"].append(self.a_list[1]["D(t)"][0])
+        # self.a_list[3]["f(t)"].append(None)
+        # self.a_list[3]["f(t)"].append(self.a_list[1]["D(t)"][0])
+        # self.a_list[4]["T(t)"].append(None)
+        # self.a_list[4]["T(t)"].append(0)
+        
+        if start == 1:
+            for i in range(0,start):
+                self.a_list[2]["F(t)"].append(None)
+                self.a_list[2]["F(t)"].append(self.a_list[1]["D(t)"][0])
+                self.a_list[3]["f(t)"].append(None)
+                self.a_list[3]["f(t)"].append(self.a_list[1]["D(t)"][0])
+                self.a_list[4]["T(t)"].append(None)
+                self.a_list[4]["T(t)"].append(0)
+           
+        elif start > 1:
+            for i in range(len(self.a_list[1]["D(t)"][0:start])):
+                self.a_list[2]["F(t)"].append(None)
+                self.a_list[3]["f(t)"].append(None)
+                self.a_list[4]["T(t)"].append(None)
+        diviation = sum(self.a_list[1]["D(t)"][0:(start+0)])/start
+        self.a_list[2]["F(t)"].append(diviation)
+        self.a_list[3]["f(t)"].append(diviation)
         self.a_list[4]["T(t)"].append(0)
-       
+        print("D(t)", "=", self.a_list[1]["D(t)"])
+        print("F(t)", "=", self.a_list[2]["F(t)"])
+        print("f(t)", "=",self.a_list[3]["f(t)"])
+        print("T(t)", "=",self.a_list[4]["T(t)"])
+
         a = input("Enter your a here: ")
         b = input("Enter your b here: ")
         leng = len(self.a_list[1]["D(t)"])
 
         if a < 1 and a > 0 and b < 1 and b > 0 :
-            for i in range(2,leng):
-                error = (self.a_list[1]["D(t)"][i-1] - self.a_list[2]["F(t)"][i-1])
-                forecast = (self.a_list[2]["F(t)"][i-1] + a*(error))
+            for i in range(start+1,leng):
+                error = (float(self.a_list[1]["D(t)"][i-1]) - float(self.a_list[2]["F(t)"][i-1]))
+                print("D(t-1): ",float(self.a_list[1]["D(t)"][i-1]), "-", "F(t-1): ",float(self.a_list[2]["F(t)"][i-1]),"=","Error: ",error)
+                forecast = (float(self.a_list[2]["F(t)"][i-1]) + a*(error))
+                print("F(t-1): ",float(self.a_list[2]["F(t)"][i-1]), "+", "Error: " , a*(error),"=","f(t): ",forecast)
                 self.a_list[3]["f(t)"].append(forecast)
-                trend = (self.a_list[4]["T(t)"][i-1] + b*(forecast - self.a_list[2]["F(t)"][i-1]))
+                trend = (float(self.a_list[4]["T(t)"][i-1]) + b*(forecast - float(self.a_list[2]["F(t)"][i-1])))
+                print("T(t-1): " ,float(self.a_list[4]["T(t)"][i-1]), "+","f(t) - F(t-1) = T(t)",b*(forecast - float(self.a_list[2]["F(t)"][i-1])) )
                 self.a_list[4]["T(t)"].append(trend)
                 customizedExp = forecast + trend
+                print("f(t): ",forecast, "+", "T(t): ",trend,"=","F(t): ",customizedExp)
                 self.a_list[2]["F(t)"].append(customizedExp)
-            print(self.a_list[2]["F(t)"])
-            print(self.a_list[3]["f(t)"])
-            print(self.a_list[4]["T(t)"])
+        # print("D(t)", "=", self.a_list[1]["D(t)"])
+        # print("F(t)", "=", self.a_list[2]["F(t)"])
+        # print("f(t)", "=",self.a_list[3]["f(t)"])
+        # print("T(t)", "=",self.a_list[4]["T(t)"])
+
 
                 
 
 values_prediction = Prediction(values)
-values_prediction.movingAverage(3)
+values_prediction.customizedExponentialSmoothing(2)
 
 
 
