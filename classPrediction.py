@@ -116,27 +116,27 @@ class Prediction:
 
         if a < 1 and a > 0 and b < 1 and b > 0 :
             for i in range(start+1,leng):
-                error = (float(self.a_list[1]["D(t)"][i-1]) - float(self.a_list[2]["F(t)"][i-1]))
-                print("D(t-1): ",float(self.a_list[1]["D(t)"][i-1]), "-", "F(t-1): ",float(self.a_list[2]["F(t)"][i-1]),"=","Error: ",error)
-                forecast = (float(self.a_list[2]["F(t)"][i-1]) + a*(error))
-                print("F(t-1): ",float(self.a_list[2]["F(t)"][i-1]), "+", "Error: " , a*(error),"=","f(t): ",forecast)
+                error = (float(self.a_list[1]["D(t)"][i-1]) - float(self.a_list[3]["f(t)"][i-1]))
+                # print("D(t-1): ",float(self.a_list[1]["D(t)"][i-1]), "-", "F(t-1): ",float(self.a_list[2]["F(t)"][i-1]),"=","Error: ",error)
+                forecast = (float(self.a_list[3]["f(t)"][i-1]) + a*(error))
+                # print("F(t-1): ",float(self.a_list[2]["F(t)"][i-1]), "+", "Error: " , a*(error),"=","f(t): ",forecast)
                 self.a_list[3]["f(t)"].append(forecast)
                 trend = (float(self.a_list[4]["T(t)"][i-1]) + b*(forecast - float(self.a_list[2]["F(t)"][i-1])))
-                print("T(t-1): " ,float(self.a_list[4]["T(t)"][i-1]), "+","f(t) - F(t-1) = T(t)",b*(forecast - float(self.a_list[2]["F(t)"][i-1])) )
+                # print("T(t-1): " ,float(self.a_list[4]["T(t)"][i-1]), "+","f(t) - F(t-1) = T(t)",b*(forecast - float(self.a_list[2]["F(t)"][i-1])) )
                 self.a_list[4]["T(t)"].append(trend)
                 customizedExp = forecast + trend
-                print("f(t): ",forecast, "+", "T(t): ",trend,"=","F(t): ",customizedExp)
+                # print("f(t): ",forecast, "+", "T(t): ",trend,"=","F(t): ",customizedExp)
                 self.a_list[2]["F(t)"].append(customizedExp)
-        # print("D(t)", "=", self.a_list[1]["D(t)"])
-        # print("F(t)", "=", self.a_list[2]["F(t)"])
-        # print("f(t)", "=",self.a_list[3]["f(t)"])
-        # print("T(t)", "=",self.a_list[4]["T(t)"])
-
+        print("D(t)", "=", self.a_list[1]["D(t)"])
+        print("F(t)", "=", self.a_list[2]["F(t)"])
+        print("f(t)", "=",self.a_list[3]["f(t)"])
+        print("T(t)", "=",self.a_list[4]["T(t)"])
+        return start
 
                 
 
-values_prediction = Prediction(values)
-values_prediction.customizedExponentialSmoothing(2)
+# values_prediction = Prediction(values)
+# values_prediction.customizedExponentialSmoothing(2)
 
 
 

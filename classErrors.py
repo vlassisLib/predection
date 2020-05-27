@@ -91,35 +91,38 @@ class Errors:
         for i in range(1,leng_Dt):
             Ed = (self.a_list[1]["D(t)"][i] - self.a_list[2]["F(t)"][i])**2
             mse = mse + Ed
-            print(mse)
+            print(Ed)
         mean = mse/(leng_Ft-1)
         print("The MSE error for Naive Prediction is: " , mean)
 
     # MSE FOR MOVING AVERAGE
     def mseMovingAverage(self,k):
         mse_moving_average = classPrediction.Prediction(values)
+        mse_moving_average.movingAverage(k)
         leng_Dt = len(self.a_list[1]["D(t)"])
+        leng_Ft = len(self.a_list[2]["F(t)"])
         mse = 0
-        for i in range(mse_moving_average.movingAverage(k),leng_Dt):
+        for i in range(k,leng_Dt):
             Ed = (self.a_list[1]["D(t)"][i] - self.a_list[2]["F(t)"][i])**2
             print(Ed)
             mse = mse + Ed
-        print(mse)
-        leng_Ft = len(self.a_list[2]["F(t)"])
+        
         mean = mse / (leng_Ft-k)
         print("The MSE error for Moving Average is: " , mean)
 
     # MSE FOR STATIONARY MOBILE MEDIA
     def mseStationaryMobileMedia(self,k):
         mse_stationery_mobile_media = classPrediction.Prediction(values)
+        mse_stationery_mobile_media.stationaryMobileMedia(k)
         leng_Dt = len(self.a_list[1]["D(t)"])
+        leng_Ft = len(self.a_list[2]["F(t)"])
         mse = 0
-        for i in range(mse_stationery_mobile_media.stationaryMobileMedia(k),leng_Dt):
+        for i in range(k,leng_Dt):
             Ed = (self.a_list[1]["D(t)"][i] - self.a_list[2]["F(t)"][i])**2
             print(Ed)
             mse = mse + Ed
-        print(mse)
-        leng_Ft = len(self.a_list[2]["F(t)"])
+        
+        
         mean = mse /(leng_Ft-k)
         print("The MSE error for Stationary Mobile Media is: ", mean)
 
@@ -137,19 +140,100 @@ class Errors:
             Ed = (self.a_list[1]["D(t)"][i] - self.a_list[2]["F(t)"][i])**2
             print(Ed)
             mse = mse + Ed
+        
         mean = mse / (leng_Ft-start)
         print("The MSE error for Exponential Smoothing is: ", mean)
 
     # MSE FOR CUSTOMIZED EXPONENTIAL SMOOTHING
     def mseCustomizedExponentialSmoothing(self,start):
+        mse_customized_exponential_smoothing = classPrediction.Prediction(values)
+        mse_customized_exponential_smoothing.customizedExponentialSmoothing(start)
+        leng_Dt = len(self.a_list[1]["D(t)"])
+        leng_Ft = len(self.a_list[2]["F(t)"])
+        mse = 0
+        print(self.a_list[1]["D(t)"])
+        print(self.a_list[2]["F(t)"])
+
+        for i in range(start,leng_Dt):
+            Ed = (self.a_list[1]["D(t)"][i] - self.a_list[2]["F(t)"][i])**2
+            print(Ed)
+            mse = mse + Ed
         
+        mean = mse / (leng_Ft-start)
+        print("The MSE error for Customized Exponential Smoothing is: ", mean)
+
+    # MAD ERRORS
+
+    # MAD FOR NAIVE PREDICTION
+    def madNaivePrediction(self):
+        mad_naive_prediction = classPrediction.Prediction(values)
+        mad_naive_prediction.naivePrediction()
+        leng_Dt = len(self.a_list[1]["D(t)"])
+        leng_Ft = len(self.a_list[2]["F(t)"])
+        mad = 0
+
+        for i in range(1,leng_Dt):
+            Ed = abs(self.a_list[1]["D(t)"][i] - self.a_list[2]["F(t)"][i])
+            mad = mad + Ed
+            print(Ed)
+        
+        mean = mad / (leng_Ft - 1)
+        print("The MAD error for Naive Prediction is: ",mean)
+    
+    # MAD FOR MOVING AVERAGE 
+    def madMovingAverage(self,k):
+        mad_moving_Average = classPrediction.Prediction(values)
+        mad_moving_Average.movingAverage(k)
+        leng_Dt = len(self.a_list[1]["D(t)"])
+        leng_Ft = len(self.a_list[2]["F(t)"])
+        mad = 0
+
+        for i in range(k,leng_Dt):
+            Ed = abs(self.a_list[1]["D(t)"][i] - self.a_list[2]["F(t)"][i])
+            print(Ed)
+            mad = mad + Ed
+        
+        mean = mad / (leng_Ft-k)
+        print("The MAD error for Moving Average is: " , mean)
+
+    # MAD FOR STATIONARY MOBILE MEDIA
+    def madStationaryMobileMedia(self,k):
+        mad_stationary_mobile_media = classPrediction.Prediction(values)
+        mad_stationary_mobile_media.stationaryMobileMedia(k)
+        leng_Dt = len(self.a_list[1]["D(t)"])
+        leng_Ft = len(self.a_list[2]["F(t)"])
+        mad = 0
+        
+        for i in range(k,leng_Dt):
+            Ed = abs(self.a_list[1]["D(t)"][i] - self.a_list[2]["F(t)"][i])
+            print(Ed)
+            mad = mad + Ed
+        mean = mad / (leng_Ft-k)
+        print("The MAD error for Stationary Mobile Media is: ",mean)
+
+    # MAD FOR EXPONENTIAL SMOOTHING
+    def madExponentialSmoothing(self,start):
+        mad_exponential_smoothing = classPrediction.Prediction(values)
+        mad_exponential_smoothing.exponentialSmoothing(start)
+        leng_Dt = len(self.a_list[1]["D(t)"])
+        leng_Ft = len(self.a_list[2]["F(t)"])
+        mad = 0
+
+        for i in range(start,leng_Dt):
+            Ed = abs(self.a_list[1]["D(t)"][i] - self.a_list[2]["F(t)"][i])
+            print(Ed)
+            mad = mad + Ed
+        mean = mad / (leng_Ft - start)
+        print("The MAD error for Exponential Smoothing is: " , mean)
+    
+                   
 
 
 
 
 
 error = Errors(values)
-error.cfeExponentialSmoothing(2)
+error.madExponentialSmoothing(2)
 
 
 
