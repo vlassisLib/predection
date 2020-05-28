@@ -225,7 +225,81 @@ class Errors:
             mad = mad + Ed
         mean = mad / (leng_Ft - start)
         print("The MAD error for Exponential Smoothing is: " , mean)
+    # MAPE FOR NAIVE PREDICTION
+    def mapeNaivePrediction(self):
+        mape_naive_prediction = classPrediction.Prediction(values)
+        mape_naive_prediction.naivePrediction()
+        leng_Dt = len(self.a_list[1]["D(t)"])
+        leng_Ft = len(self.a_list[2]["F(t)"])
+        mape = 0
+
+        for i in range(1,leng_Dt):
+            Ed = (abs(self.a_list[1]["D(t)"][i] - self.a_list[2]["F(t)"][i]) / self.a_list[1]["D(t)"][i]) 
+            print(Ed)
+            mape = mape + Ed
+        mean = mape / (leng_Ft - 1)
+        print("The MAPE error for Naive Prediction is: {} % ".format(mean*100))
+
+    # MAPE FOR MOVING AVERAGE
+    def mapeMovingAverage(self,k):
+        mape_moving_average = classPrediction.Prediction(values)
+        mape_moving_average.movingAverage(k)
+        leng_Dt = len(self.a_list[1]["D(t)"])
+        leng_Ft = len(self.a_list[2]["F(t)"])
+        mape = 0
+
+        for i  in range(k,leng_Dt):
+            Ed = (abs(self.a_list[1]["D(t)"][i] - self.a_list[2]["F(t)"][i]) / self.a_list[1]["D(t)"][i]) 
+            print(Ed)
+            mape = mape + Ed
+        mean = mape / (leng_Ft - k)
+        print("The MAPE error for Moving Average is {} %".format(mean*100))
+
+    # MAPE FOR STATIONARY MOBILE MEDIA 
+    def mapeStationaryMobileMedia(self,k):
+        mape_stationary_mobile_media = classPrediction.Prediction(values)
+        mape_stationary_mobile_media.stationaryMobileMedia(k)
+        leng_Dt = len(self.a_list[1]["D(t)"])
+        leng_Ft = len(self.a_list[2]["F(t)"])
+        mape = 0
+
+        for i  in range(k,leng_Dt):
+            Ed = (abs(self.a_list[1]["D(t)"][i] - self.a_list[2]["F(t)"][i]) / self.a_list[1]["D(t)"][i])
+            print(Ed)
+            mape = mape + Ed
+        mean = mape / (leng_Ft - k)
+        print("The MAPE error for Stationary Mobile Media is {} %".format(mean*100))
+
+    # MAPE FOR EXPONENTIAL SMOOTHING
+    def mapeExponentialSmoothing(self,start):
+        mape_exponential_smoothing = classPrediction.Prediction(values)
+        mape_exponential_smoothing.exponentialSmoothing(start)
+        leng_Dt = len(self.a_list[1]["D(t)"])
+        leng_Ft = len(self.a_list[2]["F(t)"])
+        mape = 0
+
+        for i in range(start,leng_Dt):
+            Ed = (abs(self.a_list[1]["D(t)"][i] - self.a_list[2]["F(t)"][i]) / self.a_list[1]["D(t)"][i])
+            print(Ed)
+            mape = mape + Ed 
+        mean = mape / (leng_Ft - start)
+        print("The MAPE error for Exponential Smoothing is {} %".format(mean*100))
     
+    # MAPE FOR CUSTOMIZED EXPONENTIAL SMOOTHING 
+    def mapeCustomizedExponentialSmoothing(self,start):
+        mape_customized_exponential_smoothing = classPrediction.Prediction(values)
+        mape_customized_exponential_smoothing.customizedExponentialSmoothing(start)
+        leng_Dt = len(self.a_list[1]["D(t)"])
+        leng_Ft = len(self.a_list[2]["F(t)"])
+        mape = 0
+
+        for i in range(start,leng_Dt):
+            Ed = (abs(self.a_list[1]["D(t)"][i] - self.a_list[2]["F(t)"][i]) / self.a_list[1]["D(t)"][i])
+            print(Ed)
+            mape = mape + Ed 
+        mean = mape / (leng_Ft - start)
+        print("The MAPE error for Exponential Smoothing is {} %".format(mean*100))
+
                    
 
 
