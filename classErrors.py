@@ -67,9 +67,9 @@ class Errors:
         print("The CFE for Exponential Smoothing is: " , cfe)
 
     # CFE FOR CUSTOMIZED EXPONENTIAL SMOOTHING 
-    def cfeCustomizedExponentialSmoothing(self):
+    def cfeCustomizedExponentialSmoothing(self,start):
         cfe_exponential_smoothing = classPrediction.Prediction(values)
-        cfe_exponential_smoothing.customizedExponentialSmoothing()
+        cfe_exponential_smoothing.customizedExponentialSmoothing(start)
         leng = len(self.a_list[1]["D(t)"])
         cfe = 0
         
